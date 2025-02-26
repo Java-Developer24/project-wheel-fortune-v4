@@ -5,7 +5,7 @@ export default function Leaderboard() {
   const sortedUsers = [...users.users].sort((a, b) => b.points - a.points);
 
   return (
-    <div className="   py-8 px-4 sm:px-6 lg:px-8  bg-gradient-to-r from-[#1a237e] via-[#4a148c] to-[#880e4f] py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-[calc(100vh-64px)]  bg-gradient-to-r from-[#1a237e] via-[#4a148c] to-[#880e4f] py-12 px-4 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-3xl ">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
