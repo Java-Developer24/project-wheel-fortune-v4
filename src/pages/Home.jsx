@@ -20,16 +20,16 @@ export default function Home() {
             </p>
             <div className="mt-8 flex gap-4">
               <Link
-                to="/wheel"
+                to="/leaderboard"
                 className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-gray-900 hover:bg-gray-800"
               >
-                Mandatory Simulation
+                Leadership Dashboard
               </Link>
               <Link
-                to="/wheel"
+                to="/dashboard"
                 className="inline-flex items-center px-6 py-3 border border-gray-300 text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
               >
-                Flexi Simulation
+                Personalized Dashboard
               </Link>
             </div>
           </motion.div>
