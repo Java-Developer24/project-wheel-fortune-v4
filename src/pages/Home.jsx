@@ -13,23 +13,24 @@ export default function Home() {
             className="text-left"
           >
             <h1 className="text-4xl font-bold text-white sm:text-5xl md:text-6xl">
-              Practice customer interactions with a personalized AI Coach and get real-time feedback.
+            Welcome to <b className='text-yellow-500'><i>gaMEtrix </i></b>-Perform, Play, Prosper!
             </h1>
             <p className="mt-6 text-lg text-white max-w-3xl">
-              "Improve your customer service skills with a personalized AI Coach that offers real-time feedback. Practice different scenarios, receive instant insights, and build confidence to handle any customer interaction effectively."
+            Experience a revolutionary <b className='text-yellow-500'>gamified performance dashboard </b> designed to <b className='text-yellow-500'>engage, motivate, and drive success.</b>
             </p>
-            <div className="mt-8 flex gap-4">
+            <br></br>
+            <p>
+            <b className='text-yellow-500'>gaMEtrix </b> transforms everyday tasks into exciting opportunities. Track your progress, earn rewards, and climb the leaderboard as you surpass performance and achieve milestones!
+            </p>
+            
+            <div className="mt-8 flex gap-2">
+            <p className='mt-2 font-semibold text-white'> <b className='text-yellow-500'>Game on! </b>Your success starts here.</p>
+
               <Link
-                to="/leaderboard"
-                className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-gray-900 hover:bg-gray-800"
+                to="/wheel"
+                className="inline-flex items-center px-3 py-2 border border-gray-300 text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 mb-10"
               >
-                Leadership Dashboard
-              </Link>
-              <Link
-                to="/dashboard"
-                className="inline-flex items-center px-6 py-3 border border-gray-300 text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
-              >
-                Personalized Dashboard
+                Whirl Of Wins
               </Link>
             </div>
           </motion.div>

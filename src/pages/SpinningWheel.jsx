@@ -318,7 +318,7 @@ function SpinningWheel() {
             animate={{ scale: [1, 1.02, 1] }}
             transition={{ duration: 2, repeat: Infinity }}
           >
-            Wheel OF Fortune
+            Whirl of Wins
           </motion.h1>
           <motion.div 
             className="logo-right-logo"
