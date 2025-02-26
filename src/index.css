@@ -1,0 +1,71 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --primary-bg: #2E1A47;
+  --secondary-bg: #3B2157;
+  --accent-yellow: #FFD700;
+  --accent-purple: #8B5CF6;
+}
+
+body {
+  background: linear-gradient(135deg, var(--primary-bg), var(--secondary-bg));
+  min-height: 100vh;
+  color: white;
+}
+
+.nav-gradient {
+  background: linear-gradient(to right, var(--primary-bg), var(--secondary-bg));
+}
+
+.button-primary {
+  background: var(--accent-yellow);
+  color: var(--primary-bg);
+  transition: all 0.3s ease;
+}
+
+.button-primary:hover {
+  filter: brightness(1.1);
+  transform: translateY(-2px);
+}
+
+.button-secondary {
+  background: transparent;
+  border: 2px solid var(--accent-yellow);
+  color: var(--accent-yellow);
+  transition: all 0.3s ease;
+}
+
+.button-secondary:hover {
+  background: var(--accent-yellow);
+  color: var(--primary-bg);
+}
+
+.confetti-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.confetti {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  opacity: 0.8;
+  border-radius: 50%;
+  animation: fall 4s linear infinite;
+}
+
+@keyframes fall {
+  0% {
+    transform: translateY(-100vh) rotate(0);
+  }
+  100% {
+    transform: translateY(100vh) rotate(720deg);
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "username": "john_doe",
+      "password": "password123",
+      "name": "John Doe",
+      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=john",
+      "points": 2980,
+      "rank": 1,
+      "achievements": ["Gold Spinner", "Top Player"]
+    },
+    {
+      "id": 2,
+      "username": "jane_smith",
+      "password": "password123",
+      "name": "Jane Smith",
+      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=jane",
+      "points": 2721,
+      "rank": 2,
+      "achievements": ["Silver Spinner"]
+    },
+    {
+      "id": 3,
+      "username": "mike_wilson",
+      "password": "password123",
+      "name": "Mike Wilson",
+      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=mike",
+      "points": 2579,
+      "rank": 3,
+      "achievements": ["Bronze Spinner"]
+    },
+    {
+      "id": 4,
+      "username": "sarah_jones",
+      "password": "password123",
+      "name": "Sarah Jones",
+      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=sarah",
+      "points": 1874,
+      "rank": 4,
+      "achievements": ["Rising Star"]
+    },
+    {
+      "id": 5,
+      "username": "alex_brown",
+      "password": "password123",
+      "name": "Alex Brown",
+      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=alex",
+      "points": 1756,
+      "rank": 5,
+      "achievements": ["Newcomer"]
+    }
+  ]
+}
