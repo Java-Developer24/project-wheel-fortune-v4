@@ -10,7 +10,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 function App() {
   return (
     <Router>
-      <div className="min-h-screen bg-gray-100">
+      <div className="min-h-screen bg-gradient-to-r from-[#1a237e] via-[#4a148c] to-[#880e4f]">
         <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
