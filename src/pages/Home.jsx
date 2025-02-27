@@ -47,7 +47,7 @@ export default function Home() {
             className="relative items-center justify-center"
           >
             <motion.div
-              className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10"
+              className="absolute top-60 left-60 transform  z-10"
               animate={{ 
                 scale: [1, 1.2, 1],
                 y: [0, -15, 0]
