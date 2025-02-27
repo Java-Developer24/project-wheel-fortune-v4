@@ -426,7 +426,7 @@ function SpinningWheel() {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
         >
-          {currentGuide ? 'SPIN' : 'CLICK TO ENTER ID'}
+          {currentGuide ? 'SPIN' : 'Game On Wheel'}
         </motion.button>
       </motion.div>
 
