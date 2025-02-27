@@ -6,6 +6,7 @@ import guidesData from '../data/guides.json';
 import useAuthStore from '../store/authStore';
 import '../App.css';
 import {Scene3D} from '../components/Scene3D';
+import { Decorations3D } from '../components/Decorations3D';
 // import {TrophyModel} from './components/Prize3D';
 
 function SpinningWheel() {
@@ -316,6 +317,21 @@ function SpinningWheel() {
         transition={{ duration: 0.5, delay: 0.2 }}
       >
         <Scene3D />
+        {/* <Canvas>
+        <PerspectiveCamera makeDefault position={[0, 0, 10]} />
+        <ambientLight intensity={0.5} />
+        <pointLight position={[10, 10, 10]} intensity={1} />
+        <pointLight position={[-10, -10, -10]} intensity={0.5} />
+        
+        
+        <Decorations3D />
+        
+        <OrbitControls
+          enableZoom={false}
+          enablePan={false}
+          enableRotate={false}
+        />
+      </Canvas> */}
         <div className="trophy-icon">🏆</div>
         <motion.div 
           className="logo-container"
@@ -330,12 +346,12 @@ function SpinningWheel() {
           >
             <img 
               className="img-sizing" 
-              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRaqVGwXfboLlsa3uQAI8Yim-rx9MrsRYED-w&s" 
+              src="/public/genpact.webp" 
               alt="Left Logo" 
             />
           </motion.div>
           <motion.h1 
-            className="lucky-spin-text"
+            className="lucky-spin-text "
             animate={{ scale: [1, 1.02, 1] }}
             transition={{ duration: 2, repeat: Infinity }}
           >
@@ -348,7 +364,7 @@ function SpinningWheel() {
           >
             <img 
               className="img-sizing"
-              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRaqVGwXfboLlsa3uQAI8Yim-rx9MrsRYED-w&s"
+              src="/public/godaddy.webp"
               alt="Right Logo"
             />
           </motion.div>

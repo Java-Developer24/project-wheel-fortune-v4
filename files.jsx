@@ -12,24 +12,19 @@ export default function Home() {
             transition={{ duration: 0.8 }}
             className="text-left"
           >
-            
-            
-            <h1 className="text-4xl font-bold text-white sm:text-5xl md:text-4xl">
-              Welcome to <b className='text-yellow-500 md:text-6xl'><i>gaMEtrix </i></b>Perform, Play, Prosper!
+            <h1 className="text-4xl font-bold text-white sm:text-5xl md:text-6xl">
+              Welcome to <b className='text-yellow-500'><i>gaMEtrix </i></b>-Perform, Play, Prosper!
             </h1>
             <p className="mt-6 text-lg text-white max-w-3xl">
               Experience a revolutionary <b className='text-yellow-500'>gamified performance dashboard </b> designed to <b className='text-yellow-500'>engage, motivate, and drive success.</b>
             </p>
             <br></br>
             <p>
-              <b className='text-yellow-500'>gaMEtrix </b> transforms everyday tasks into exciting opportunities. 
+              <b className='text-yellow-500'>gaMEtrix </b> transforms everyday tasks into exciting opportunities. Track your progress, earn rewards, and climb the leaderboard as you surpass performance and achieve milestones!
             </p>
-            <br />
-            <p>
-            Track your progress, earn rewards, and climb the leaderboard as you surpass performance and achieve milestones!
-            </p>
+            
             <div className="mt-8 flex gap-4">
-              <p className='mt-3 font-semibold text-white'> <b className='text-yellow-500'>Game on! </b>Your success starts here.</p>
+              <p className='mt-2 font-semibold text-white'> <b className='text-yellow-500'>Game on! </b>Your success starts here.</p>
 
               <Link
                 to="/wheel"
@@ -44,8 +39,9 @@ export default function Home() {
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="relative items-center justify-center"
+            className="relative flex justify-center items-center"
           >
+            {/* Centered floating logo */}
             <motion.div
               className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10"
               animate={{ 
@@ -64,9 +60,10 @@ export default function Home() {
                 className="w-32 h-32 object-contain"
               />
             </motion.div>
-            <div className="grid grid-cols-2 gap-4">
+            
+            <div className="grid grid-cols-2 gap-4 w-full max-w-md mx-auto">
               <motion.div
-                animate={{ y: [0, -10, 0] }}
+                animate={{ y: [0, -8, 0], scale: [1, 0.95, 1] }}
                 transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
                 className="shadow-2xl rounded-lg overflow-hidden transform hover:scale-105 transition-transform duration-300"
               >
@@ -78,7 +75,7 @@ export default function Home() {
               </motion.div>
               
               <motion.div
-                animate={{ y: [0, -10, 0] }}
+                animate={{ y: [0, -8, 0], scale: [1, 0.95, 1] }}
                 transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
                 className="shadow-2xl rounded-lg overflow-hidden transform hover:scale-105 transition-transform duration-300"
               >
@@ -90,7 +87,7 @@ export default function Home() {
               </motion.div>
               
               <motion.div
-                animate={{ y: [0, -10, 0] }}
+                animate={{ y: [0, -8, 0], scale: [1, 0.95, 1] }}
                 transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
                 className="shadow-2xl rounded-lg overflow-hidden transform hover:scale-105 transition-transform duration-300"
               >
@@ -102,7 +99,7 @@ export default function Home() {
               </motion.div>
 
               <motion.div
-                animate={{ y: [0, -10, 0] }}
+                animate={{ y: [0, -8, 0], scale: [1, 0.95, 1] }}
                 transition={{ duration: 4.2, repeat: Infinity, ease: "easeInOut", delay: 0.7 }}
                 className="shadow-2xl rounded-lg overflow-hidden transform hover:scale-105 transition-transform duration-300"
               >

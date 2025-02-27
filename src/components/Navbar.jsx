@@ -41,14 +41,14 @@ export default function Navbar() {
                   
                 <img
                     className="h-16 w-auto "
-                   src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRaqVGwXfboLlsa3uQAI8Yim-rx9MrsRYED-w&s"
-                    alt="Your Company"
+                   src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQiwFMs5qr50ZWbl9W9nUB_cIJGBA7lhOnys4WP9ttfs_lZZZyamXhHPZpi3iyDmK0Tjwc&usqp=CAU"
+                    alt="Genpact"
                   />
                   <b className='h-auto w-auto'>|</b>
                   <img
                     className="h-16 w-auto"
                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRaqVGwXfboLlsa3uQAI8Yim-rx9MrsRYED-w&s" 
-                    alt="Your Company"
+                    alt="GoDaddy"
                   />
                  
                 </div>
