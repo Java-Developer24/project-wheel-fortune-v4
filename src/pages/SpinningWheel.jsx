@@ -346,7 +346,7 @@ function SpinningWheel() {
           >
             <img 
               className="img-sizing" 
-              src="/public/genpact.webp" 
+              src="/genpact.webp" 
               alt="Left Logo" 
             />
           </motion.div>
@@ -364,7 +364,7 @@ function SpinningWheel() {
           >
             <img 
               className="img-sizing"
-              src="/public/godaddy.webp"
+              src="/godaddy.webp"
               alt="Right Logo"
             />
           </motion.div>
