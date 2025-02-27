@@ -61,7 +61,7 @@ export default function Home() {
               <img 
                 src="/glogo.webp" 
                 alt="GoDaddy Logo" 
-                className="w-32 h-32 object-contain"
+                className="w-32 h-32 object-contain rounded-lg"
               />
             </motion.div>
             <div className="grid grid-cols-2 gap-4">
