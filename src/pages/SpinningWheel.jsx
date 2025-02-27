@@ -167,8 +167,7 @@ function SpinningWheel() {
   };
 
   const updateGuideRewards = (guide, prize) => {
-    // In a real application, this would make an API call to update the backend
-    // For this demo, we'll just update the local state via the store
+    
     
     // Add the reward to the auth store
     addReward(prize);
