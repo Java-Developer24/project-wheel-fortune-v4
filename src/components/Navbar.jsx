@@ -36,31 +36,31 @@ export default function Navbar() {
                   )}
                 </Disclosure.Button>
               </div>
-              <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
+              <div className="flex flex-2 items-center justify-center sm:items-stretch sm:justify-start">
                 <div className="flex flex-shrink-0 space-x-4 items-center">
                   
                 <img
-                    className="h-16 w-auto "
+                    className="h-20 w-auto rounded p-2"
                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQiwFMs5qr50ZWbl9W9nUB_cIJGBA7lhOnys4WP9ttfs_lZZZyamXhHPZpi3iyDmK0Tjwc&usqp=CAU"
                     alt="Genpact"
                   />
                   <b className='h-auto w-auto'>|</b>
                   <img
-                    className="h-16 w-auto"
+                    className="h-20 w-auto rounded p-2"
                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRaqVGwXfboLlsa3uQAI8Yim-rx9MrsRYED-w&s" 
                     alt="GoDaddy"
                   />
                  
                 </div>
                 <div className="hidden sm:ml-6 sm:block">
-                  <div className="flex space-x-4">
+                  <div className="flex space-x-5">
                     {navigation.map((item) => (
                       <Link
                         key={item.name}
                         to={item.href}
                         className={classNames(
                           item.current ? 'bg-opacity-25 text-white' : 'text-gray-300 hover:bg-opacity-25 hover:text-white',
-                          'rounded-md px-3 py-2 text-sm font-medium'
+                          'rounded-md px-3 py-6 text-lg font-medium'
                         )}
                         aria-current={item.current ? 'page' : undefined}
                       >
@@ -78,7 +78,7 @@ export default function Navbar() {
                         <span className="absolute -inset-1.5" />
                         <span className="sr-only">Open user menu</span>
                         <img
-                          className="h-8 w-8 rounded-full"
+                          className="h-14 w-14 rounded-full border-2"
                           src={user.avatar}
                           alt=""
                         />
