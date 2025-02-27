@@ -71,7 +71,7 @@ export default function Home() {
                 className="shadow-2xl rounded-lg overflow-hidden transform hover:scale-105 transition-transform duration-300"
               >
                 <img 
-                  src="/DALL·E 2025-02-27 02.18.35 - A 3D-rendered T-shirt with a stylish GoDaddy logo on the front, displayed on a mannequin or neatly folded, with a modern and sleek look.webp" 
+                  src="/tshirt.webp" 
                   alt="GoDaddy T-shirt" 
                   className="w-full h-auto object-cover aspect-square"
                 />
@@ -83,7 +83,7 @@ export default function Home() {
                 className="shadow-2xl rounded-lg overflow-hidden transform hover:scale-105 transition-transform duration-300"
               >
                 <img 
-                  src="/cofee.webp" 
+                  src="/mug.webp" 
                   alt="WFH Setup" 
                   className="w-full h-auto object-cover aspect-square"
                 />
@@ -95,7 +95,7 @@ export default function Home() {
                 className="shadow-2xl rounded-lg overflow-hidden transform hover:scale-105 transition-transform duration-300"
               >
                 <img 
-                  src="/bottle.webp" 
+                  src="/bottlesip.webp" 
                   alt="Lucky Clover" 
                   className="w-full h-auto object-cover aspect-square"
                 />
@@ -107,7 +107,7 @@ export default function Home() {
                 className="shadow-2xl rounded-lg overflow-hidden transform hover:scale-105 transition-transform duration-300"
               >
                 <img 
-                  src="/headsets.webp" 
+                  src="/headsett.webp" 
                   alt="Premium Headset" 
                   className="w-full h-auto object-cover aspect-square"
                 />
