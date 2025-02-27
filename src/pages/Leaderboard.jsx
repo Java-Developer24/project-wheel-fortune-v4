@@ -11,6 +11,7 @@ export default function Leaderboard() {
     silver: [],
     bronze: []
   });
+  const [currentUserRank, setCurrentUserRank] = useState(null);
 
   useEffect(() => {
     // Sort guides by rank and group by bucket
@@ -31,7 +32,22 @@ export default function Leaderboard() {
     });
 
     setGuides(sortedGuides);
-  }, []);
+
+    // Find current user's rank
+    if (user) {
+      const userName = user.username.split('_').map(word => 
+        word.charAt(0).toUpperCase() + word.slice(1)
+      ).join(' ');
+      
+      const currentGuide = guidesData.guides.find(g => 
+        g['name'].toLowerCase() === userName.toLowerCase()
+      );
+      
+      if (currentGuide) {
+        setCurrentUserRank(currentGuide);
+      }
+    }
+  }, [user]);
 
   const getBadgeColor = (bucket) => {
     switch (bucket) {
@@ -60,7 +76,7 @@ export default function Leaderboard() {
             </thead>
             <tbody className="divide-y divide-gray-200">
               {guides[bucket].map((guide, index) => {
-                const isCurrentUser = user && user.username.toLowerCase() === guide['Guide name'].toLowerCase().replace(' ', '_');
+                const isCurrentUser = user && user.username.toLowerCase() === guide['name'].toLowerCase().replace(' ', '_');
                 
                 return (
                   <motion.tr
@@ -91,13 +107,13 @@ export default function Leaderboard() {
                         <div className="h-10 w-10 flex-shrink-0">
                           <img
                             className="h-10 w-10 rounded-full"
-                            src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${guide['Guide name']}`}
-                            alt={guide['Guide name']}
+                            src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${guide['name']}`}
+                            alt={guide['name']}
                           />
                         </div>
                         <div className="ml-4">
                           <div className="text-sm font-medium text-gray-900">
-                            {guide['Guide name']}
+                            {guide['name']}
                             {isCurrentUser && (
                               <span className="ml-2 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
                                 You
@@ -135,7 +151,7 @@ export default function Leaderboard() {
   );
 
   return (
-    <div className="min-h-[calc(100vh-64px)] bg-gradient-to-r from-[#1a237e] via-[#4a148c] to-[#880e4f] py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-[calc(100vh-64px)] bg-gradient-to-r from-[#1a237e] via-[#4a148c] to-[#880e4f] py-12 px-4 sm:px-6 lg:px-8 overflow-y-auto">
       <div className="mx-auto max-w-5xl">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -146,6 +162,52 @@ export default function Leaderboard() {
           <h2 className="text-3xl font-bold text-white text-center mb-8">
             Champion's Corner
           </h2>
+          
+          {currentUserRank && (
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              className="mb-8 bg-gradient-to-r from-purple-900/80 to-indigo-900/80 rounded-lg p-4 shadow-lg"
+            >
+              <div className="flex items-center justify-between flex-wrap gap-4">
+                <div className="flex items-center">
+                  <div className="relative">
+                    <img
+                      className="h-16 w-16 rounded-full border-2 border-yellow-400"
+                      src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${currentUserRank['name']}`}
+                      alt={currentUserRank['name']}
+                    />
+                    <div className="absolute -bottom-2 -right-2 bg-yellow-400 text-gray-900 rounded-full w-8 h-8 flex items-center justify-center font-bold text-sm border-2 border-white">
+                      #{currentUserRank.Rank}
+                    </div>
+                  </div>
+                  <div className="ml-4">
+                    <h3 className="text-xl font-bold text-white">{currentUserRank['name']}</h3>
+                    <div className="flex items-center mt-1 space-x-2">
+                      <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-gradient-to-r ${getBadgeColor(currentUserRank.bucket)} text-white`}>
+                        {currentUserRank.bucket.charAt(0).toUpperCase() + currentUserRank.bucket.slice(1)} Tier
+                      </span>
+                      <span className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                        {currentUserRank['Badges Earned']} Badges
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="flex items-center bg-white/20 rounded-lg p-3">
+                  <div className="mr-4 text-center">
+                    <div className="text-sm text-gray-200">Points</div>
+                    <div className="text-2xl font-bold text-yellow-400">{parseInt(currentUserRank.Points).toLocaleString()}</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-sm text-gray-200">Bucket</div>
+                    <div className="text-2xl font-bold text-yellow-400">{currentUserRank['Bucket  code']}</div>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          )}
           
           {renderTierSection('diamond', 'Diamond')}
           {renderTierSection('gold', 'Gold')}

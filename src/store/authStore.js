@@ -30,16 +30,20 @@ const useAuthStore = create(
 
       addReward: (reward) => {
         const currentHistory = get().rewardsHistory || [];
+        const newReward = {
+          date: new Date().toISOString().split('T')[0],
+          reward: reward,
+          points: '+' + Math.floor(Math.random() * 500 + 100)
+        };
+        
         set({
           rewardsHistory: [
-            {
-              date: new Date().toISOString().split('T')[0],
-              reward: reward,
-              points: '+' + Math.floor(Math.random() * 500 + 100)
-            },
+            newReward,
             ...currentHistory
           ]
         });
+        
+        return newReward;
       }
     }),
     {
