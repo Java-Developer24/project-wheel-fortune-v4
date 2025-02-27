@@ -12,19 +12,8 @@ export default function Home() {
             transition={{ duration: 0.8 }}
             className="text-left"
           >
-            {/* <div className="flex items-center mb-6">
-              <motion.img 
-                src="/glogo.webp" 
-                alt="GoDaddy Logo" 
-                className="h-16 mr-4"
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.5 }}
-              />
-            </div> */}
-            
-            <h1 className="text-4xl font-bold text-white sm:text-5xl md:text-5xl">
-              Welcome to <b className='text-yellow-500'><i>gaMEtrix </i></b>-Perform, Play, Prosper!
+            <h1 className="text-4xl font-bold text-white sm:text-4xl md:text-5xl">
+              Welcome to <b className='text-yellow-500'><i>gaMEtrix </i></b>Perform, Play, Prosper!
             </h1>
             <p className="mt-6 text-lg text-white max-w-3xl">
               Experience a revolutionary <b className='text-yellow-500'>gamified performance dashboard </b> designed to <b className='text-yellow-500'>engage, motivate, and drive success.</b>
@@ -50,7 +39,7 @@ export default function Home() {
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="relative"
+            className="relative flex justify-center items-center"
           >
             {/* Centered floating logo */}
             <motion.div
@@ -72,7 +61,7 @@ export default function Home() {
               />
             </motion.div>
             
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-2 gap-4 w-full max-w-md mx-auto">
               <motion.div
                 animate={{ y: [0, -8, 0], scale: [1, 0.95, 1] }}
                 transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
