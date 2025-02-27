@@ -40,8 +40,8 @@ export default function Navbar() {
                 <div className="flex flex-shrink-0 space-x-4 items-center">
                   
                 <img
-                    className="h-24 w-auto rounded p-2 "
-                   src="/genpact_logo_white.png"
+                    className="h-24 w-auto "
+                   src="/genpact_logo_white_v2.png"
                     alt="Genpact"
                   />
                   <b className='h-auto w-auto'>|</b>
