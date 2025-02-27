@@ -12,7 +12,7 @@ export default function Home() {
             transition={{ duration: 0.8 }}
             className="text-left"
           >
-            <div className="flex items-center mb-6">
+            {/* <div className="flex items-center mb-6">
               <motion.img 
                 src="/glogo.webp" 
                 alt="GoDaddy Logo" 
@@ -21,9 +21,9 @@ export default function Home() {
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5 }}
               />
-            </div>
+            </div> */}
             
-            <h1 className="text-4xl font-bold text-white sm:text-5xl md:text-6xl">
+            <h1 className="text-4xl font-bold text-white sm:text-5xl md:text-5xl">
               Welcome to <b className='text-yellow-500'><i>gaMEtrix </i></b>-Perform, Play, Prosper!
             </h1>
             <p className="mt-6 text-lg text-white max-w-3xl">
@@ -52,9 +52,29 @@ export default function Home() {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="relative"
           >
+            {/* Centered floating logo */}
+            <motion.div
+              className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10"
+              animate={{ 
+                scale: [1, 1.2, 1],
+                y: [0, -15, 0]
+              }}
+              transition={{ 
+                duration: 4,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+            >
+              <img 
+                src="/glogo.webp" 
+                alt="GoDaddy Logo" 
+                className="w-32 h-32 object-contain"
+              />
+            </motion.div>
+            
             <div className="grid grid-cols-2 gap-4">
               <motion.div
-                animate={{ y: [0, -10, 0] }}
+                animate={{ y: [0, -8, 0], scale: [1, 0.95, 1] }}
                 transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
                 className="shadow-2xl rounded-lg overflow-hidden transform hover:scale-105 transition-transform duration-300"
               >
@@ -66,7 +86,7 @@ export default function Home() {
               </motion.div>
               
               <motion.div
-                animate={{ y: [0, -10, 0] }}
+                animate={{ y: [0, -8, 0], scale: [1, 0.95, 1] }}
                 transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
                 className="shadow-2xl rounded-lg overflow-hidden transform hover:scale-105 transition-transform duration-300"
               >
@@ -78,7 +98,7 @@ export default function Home() {
               </motion.div>
               
               <motion.div
-                animate={{ y: [0, -10, 0] }}
+                animate={{ y: [0, -8, 0], scale: [1, 0.95, 1] }}
                 transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
                 className="shadow-2xl rounded-lg overflow-hidden transform hover:scale-105 transition-transform duration-300"
               >
@@ -90,7 +110,7 @@ export default function Home() {
               </motion.div>
 
               <motion.div
-                animate={{ y: [0, -10, 0] }}
+                animate={{ y: [0, -8, 0], scale: [1, 0.95, 1] }}
                 transition={{ duration: 4.2, repeat: Infinity, ease: "easeInOut", delay: 0.7 }}
                 className="shadow-2xl rounded-lg overflow-hidden transform hover:scale-105 transition-transform duration-300"
               >

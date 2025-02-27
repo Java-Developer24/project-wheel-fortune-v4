@@ -53,16 +53,6 @@ function SpinningWheel() {
     return () => clearInterval(confettiInterval);
   }, [isPlaceholderSpinning]);
 
-  const updateGuideRewards = (guide, prize) => {
-    // In a real application, this would make an API call to update the backend
-    // For this demo, we'll just update the local state via the store
-    
-    // Add the reward to the auth store
-    addReward(prize);
-    
-    console.log(`Updated rewards for ${guide.ID}: ${prize}`);
-  };
-
   const sendPrizeEmail = async (guide, prize) => {
     const emailTemplate = `
       <html>
@@ -70,7 +60,7 @@ function SpinningWheel() {
           <div style="max-width: 600px; margin: 0 auto; padding: 20px;">
             <h2 style="color: #2c3e50; text-align: center;">🎉 Congratulations on Your Prize! 🎉</h2>
             
-            <p>Dear ${guide['name']},</p>
+            <p>Dear ${guide.name},</p>
             
             <p>We're excited to inform you that you've won a fantastic prize in our GoDaddy Wheel of Fortune game!</p>
             
@@ -81,7 +71,7 @@ function SpinningWheel() {
             <p>Prize Details:</p>
             <ul>
               <li>Prize Category: ${guide.bucket.toUpperCase()}</li>
-              <li>Guide ID: ${guide.ID}</li>
+              <li>Guide ID: ${guide.id}</li>
               <li>Date Won: ${new Date().toLocaleDateString()}</li>
             </ul>
             
@@ -119,7 +109,6 @@ function SpinningWheel() {
       console.error('Error sending email:', error);
     }
   };
-
   const handleSpinClick = () => {
     if (!currentGuide) {
       setShowDialog(true);
@@ -136,7 +125,7 @@ function SpinningWheel() {
     useEffect(() => {
       const spinInterval = setInterval(() => {
         setIsPlaceholderSpinning(prev => !prev);
-        if ( isPlaceholderSpinning) {
+        if (isPlaceholderSpinning) {
           createConfetti(30); // Reduced number of confetti particles
         }
       }, 4000); // Increased interval
@@ -176,15 +165,30 @@ function SpinningWheel() {
     );
   };
 
+  const updateGuideRewards = (guide, prize) => {
+    // Update the guide's rewards in the store
+    addReward(prize);
+    
+    // Deduct points for spinning (500 points per spin)
+    const updatedPoints = Math.max(0, parseInt(guide.Points) - 500);
+    guide.Points = updatedPoints.toString();
+    
+    // Add the prize to the guide's rewards
+    if (guide.rewards) {
+      guide.rewards += `, ${prize}`;
+    } else {
+      guide.rewards = prize;
+    }
+    
+    console.log(`Updated rewards for ${guide.name} (${guide.ID}): ${prize}`);
+    console.log(`Updated points for ${guide.name} (${guide.ID}): ${guide.Points}`);
+  };
+
   const handleClaimPrize = () => {
     if (currentGuide && winningPrize) {
-      // Update the guide's rewards in the store
-      updateGuideRewards(currentGuide, winningPrize);
-      
-      // Send email notification
       sendPrizeEmail(currentGuide, winningPrize);
-      
-      console.log(`Prize claimed by ${currentGuide['name']} (${currentGuide.ID}): ${winningPrize}`);
+      updateGuideRewards(currentGuide, winningPrize);
+      console.log(`Prize claimed by ${currentGuide.name} (${currentGuide.ID}): ${winningPrize}`);
     }
     
     setShowWinDialog(false);
@@ -205,7 +209,7 @@ function SpinningWheel() {
     const guide = guidesData.guides.find(g => g.ID === guideId);
     
     if (guide) {
-      console.log(`Guide ${guide['name']} (${guide.ID}) authenticated`);
+      console.log(`Guide ${guide.name} (${guide.ID}) authenticated`);
       setCurrentGuide(guide);
       const bucket = guide.bucket;
       const allPrizes = guidesData.allPrizes;
@@ -488,3 +492,4 @@ function SpinningWheel() {
 }
 
 export default SpinningWheel;
+

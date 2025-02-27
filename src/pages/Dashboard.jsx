@@ -4,7 +4,7 @@ import useAuthStore from '../store/authStore';
 import guidesData from '../data/guides.json';
 
 export default function Dashboard() {
-  const { user, rewardsHistory, addReward } = useAuthStore();
+  const { user, rewardsHistory } = useAuthStore();
   const [userGuide, setUserGuide] = useState(null);
   const [activeTab, setActiveTab] = useState('overview');
   const [localRewardsHistory, setLocalRewardsHistory] = useState([]);
@@ -50,9 +50,9 @@ export default function Dashboard() {
     // If no rewards are found, add some default ones
     if (combinedRewards.length === 0) {
       combinedRewards.push(
-        { date: '2024-02-10', reward: 'Gold Prize', points: '+500' },
-        { date: '2024-02-09', reward: 'Daily Login', points: '+100' },
-        { date: '2024-02-08', reward: 'Completed Challenge', points: '+300' }
+        { date: '2024-02-10', reward: 'Gold Prize', points: '-500' },
+        { date: '2024-02-09', reward: 'Daily Login', points: '-100' },
+        { date: '2024-02-08', reward: 'Completed Challenge', points: '-300' }
       );
     }
     
@@ -61,24 +61,24 @@ export default function Dashboard() {
 
   // Calculate points data
   const pointsEarned = userGuide ? parseInt(userGuide.Points) : 0;
-  const pointsRedeemed = 500; // Example value
+  const pointsRedeemed = rewardsHistory.length * 500; // 500 points per spin
   const pointsBalance = pointsEarned - pointsRedeemed;
 
   const stats = [
-    { name: 'Total Points Earned', value: pointsEarned.toLocaleString() },
-    { name: 'Points Redeemed', value: pointsRedeemed.toLocaleString() },
-    { name: 'Points Balance', value: pointsBalance.toLocaleString() },
-    { name: 'Rank', value: userGuide ? `#${userGuide.Rank}` : '-' },
+    { name: 'Total Points Earned', value: pointsEarned.toLocaleString(), icon: '🏆' },
+    { name: 'Points Redeemed', value: pointsRedeemed.toLocaleString(), icon: '💰' },
+    { name: 'Balance Points', value: pointsBalance.toLocaleString(), icon: '💎' },
+    { name: 'Rank', value: userGuide ? `#${userGuide.Rank}` : '', icon: '🥇' },
   ];
 
   const performanceMetrics = userGuide ? [
-    { name: 'Refund %', value: userGuide['Refund%'] },
-    { name: 'NRPC', value: userGuide['NRPC'] },
-    { name: 'New Revenue %', value: userGuide['New Revenue %'] },
-    { name: 'New con%', value: userGuide['New con%'] },
-    { name: 'NPS', value: userGuide['NPS'] },
-    { name: 'CPD', value: userGuide['CPD'] },
-    { name: 'WOW Learning', value: userGuide['WOW Learning'] },
+    { name: 'Refund %', value: userGuide['Refund%'], color: 'from-blue-400 to-blue-600' },
+    { name: 'NRPC', value: userGuide['NRPC'], color: 'from-purple-400 to-purple-600' },
+    { name: 'New Revenue %', value: userGuide['New Revenue %'], color: 'from-green-400 to-green-600' },
+    { name: 'New con%', value: userGuide['New con%'], color: 'from-yellow-400 to-yellow-600' },
+    { name: 'NPS', value: userGuide['NPS'], color: 'from-red-400 to-red-600' },
+    { name: 'CPD', value: userGuide['CPD'], color: 'from-indigo-400 to-indigo-600' },
+    { name: 'WOW Learning', value: userGuide['WOW Learning'], color: 'from-pink-400 to-pink-600' },
   ] : [];
 
   const getBadgeColor = (bucket) => {
@@ -89,6 +89,13 @@ export default function Dashboard() {
       case 'bronze': return 'from-amber-600 to-amber-800';
       default: return 'from-gray-400 to-gray-600';
     }
+  };
+
+  const getLevelShield = (rank) => {
+    const rankNum = parseInt(rank);
+    if (rankNum <= 15) return 3;
+    if (rankNum <= 50) return 2;
+    return 1;
   };
 
   return (
@@ -163,7 +170,7 @@ export default function Dashboard() {
                         <div className="flex-shrink-0">
                           <div className="w-12 h-12 bg-indigo-100 rounded-full flex items-center justify-center">
                             <span className="text-indigo-600 text-xl font-semibold">
-                              {stat.name[0]}
+                              {stat.icon}
                             </span>
                           </div>
                         </div>
@@ -179,37 +186,45 @@ export default function Dashboard() {
                         </div>
                       </div>
                     </div>
+                    <div className="bg-gradient-to-r from-indigo-500 to-purple-600 h-1"></div>
                   </motion.div>
                 ))}
               </div>
 
               {userGuide && (
                 <div className="mt-8">
-                  <h3 className="text-xl font-semibold text-gray-800 mb-4">Tier Information</h3>
+                  <h3 className="text-xl font-semibold text-gray-800 mb-4">User Information</h3>
                   <div className="bg-gradient-to-r from-purple-100 to-indigo-100 p-6 rounded-lg">
                     <div className="flex flex-col md:flex-row md:items-center md:justify-between">
                       <div className="flex items-center mb-4 md:mb-0">
                         <div className="relative">
                           <div className="w-20 h-20 rounded-full bg-gradient-to-r from-purple-500 to-indigo-600 flex items-center justify-center text-white text-3xl font-bold">
-                            {userGuide.bucket[0].toUpperCase()}
+                            {userGuide.name[0].toUpperCase()}
                           </div>
-                          <motion.div 
-                            className="absolute -top-2 -right-2 w-8 h-8 bg-yellow-400 rounded-full flex items-center justify-center text-gray-900 font-bold text-sm border-2 border-white"
-                            animate={{ scale: [1, 1.2, 1] }}
-                            transition={{ duration: 2, repeat: Infinity }}
-                          >
-                            {userGuide.Rank}
-                          </motion.div>
+                          <div className="absolute -top-2 -right-2">
+                            <motion.div 
+                              className="hexagon-shield"
+                              animate={{ scale: [1, 1.1, 1] }}
+                              transition={{ duration: 2, repeat: Infinity }}
+                            >
+                              <div className="hexagon-content flex items-center justify-center">
+                                <span className="text-xs font-bold">{userGuide.Rank}</span>
+                              </div>
+                            </motion.div>
+                          </div>
                         </div>
                         <div className="ml-6">
-                          <h4 className="text-xl font-bold capitalize">{userGuide.bucket} Tier</h4>
+                          <h4 className="text-xl text-black font-bold">{userGuide.name}</h4>
                           <div className="flex items-center mt-2 space-x-2">
                             <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-gradient-to-r ${getBadgeColor(userGuide.bucket)} text-white`}>
                               {userGuide.bucket.charAt(0).toUpperCase() + userGuide.bucket.slice(1)} Tier
                             </span>
-                            <span className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-                              Rank {userGuide.Rank}
-                            </span>
+                            <div className="flex items-center bg-gradient-to-r from-yellow-400 to-yellow-600 text-gray-900 px-2.5 py-1 rounded-full">
+                              <svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clipRule="evenodd"></path>
+                              </svg>
+                              <span className="text-xs font-bold">Level {getLevelShield(userGuide.Rank)}</span>
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -223,11 +238,11 @@ export default function Dashboard() {
                           />
                           <div className="absolute inset-0 w-full h-full rounded-full bg-gradient-to-r from-yellow-400 to-yellow-600 flex items-center justify-center">
                             <span className="text-white text-xl font-bold">
-                              {userGuide['Badges Earned']}
+                              {getLevelShield(userGuide.Rank)}
                             </span>
                           </div>
                         </div>
-                        <span className="mt-2 text-sm font-medium text-gray-700">Badges Earned</span>
+                        <span className="mt-2 text-sm font-medium text-gray-700">Level Shield</span>
                       </div>
                     </div>
                   </div>
@@ -254,10 +269,19 @@ export default function Dashboard() {
                             initial={{ opacity: 0, y: 10 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.3, delay: index * 0.1 }}
+                            className="hover:bg-amber-50 transition-colors"
                           >
                             <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{reward.date}</td>
-                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{reward.reward}</td>
-                            <td className="px-6 py-4 whitespace-nowrap text-sm text-green-600 text-right font-medium">{reward.points}</td>
+                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                              <div className="flex items-center">
+                                <span className="w-8 h-8 flex items-center justify-center bg-amber-100 rounded-full mr-2 text-amber-600">
+                                  {reward.reward.includes('Gold') ? '🏆' : 
+                                   reward.reward.includes('Daily') ? '📅' : '🎁'}
+                                </span>
+                                {reward.reward}
+                              </div>
+                            </td>
+                            <td className="whitespace-nowrap px-3 py-4 text-sm text-red-600 text-right font-medium">{reward.points}</td>
                           </motion.tr>
                         ))}
                       </tbody>
@@ -281,39 +305,45 @@ export default function Dashboard() {
               <h3 className="text-xl font-semibold text-gray-800 mb-6">Performance Metrics</h3>
               
               {userGuide ? (
-                <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
-                  <table className="min-w-full divide-y divide-gray-300">
-                    <thead className="bg-gray-50">
-                      <tr>
-                        <th scope="col" className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">Metric</th>
-                        <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Value</th>
-                        <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Performance</th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-gray-200 bg-white">
-                      {performanceMetrics.map((metric, index) => (
-                        <motion.tr 
-                          key={metric.name}
-                          initial={{ opacity: 0, x: -20 }}
-                          animate={{ opacity: 1, x: 0 }}
-                          transition={{ duration: 0.3, delay: index * 0.05 }}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {performanceMetrics.map((metric, index) => (
+                    <motion.div
+                      key={metric.name}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.5, delay: index * 0.1 }}
+                      className="bg-white rounded-lg shadow-md p-4 border border-gray-200 hover:shadow-lg transition-shadow"
+                    >
+                      <div className="flex justify-between items-center mb-2">
+                        <h4 className="text-lg font-semibold text-gray-800">{metric.name}</h4>
+                        <span className="text-lg font-bold text-indigo-600">{metric.value}</span>
+                      </div>
+                      <div className="w-full bg-gray-200 rounded-full h-4 overflow-hidden">
+                        <motion.div 
+                          className={`h-4 rounded-full bg-gradient-to-r ${metric.color}`}
+                          initial={{ width: 0 }}
+                          animate={{ width: `${Math.min(parseFloat(metric.value) * 10, 100)}%` }}
+                          transition={{ duration: 1, delay: index * 0.1 }}
+                        ></motion.div>
+                      </div>
+                      <div className="mt-2 text-sm text-gray-500 flex justify-between">
+                        <span>
+                          {parseFloat(metric.value) > 0.7 ? 'Excellent' : 
+                           parseFloat(metric.value) > 0.5 ? 'Good' : 
+                           parseFloat(metric.value) > 0.3 ? 'Average' : 'Needs Improvement'}
+                        </span>
+                        <motion.span 
+                          className="text-indigo-600 font-medium"
+                          animate={{ scale: [1, 1.1, 1] }}
+                          transition={{ duration: 2, repeat: Infinity }}
                         >
-                          <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">{metric.name}</td>
-                          <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{metric.value}</td>
-                          <td className="whitespace-nowrap px-3 py-4">
-                            <div className="w-full bg-gray-200 rounded-full h-2.5">
-                              <motion.div 
-                                className="bg-blue-600 h-2.5 rounded-full"
-                                initial={{ width: 0 }}
-                                animate={{ width: `${Math.min(parseFloat(metric.value) * 10, 100)}%` }}
-                                transition={{ duration: 1, delay: index * 0.1 }}
-                              ></motion.div>
-                            </div>
-                          </td>
-                        </motion.tr>
-                      ))}
-                    </tbody>
-                  </table>
+                          {parseFloat(metric.value) > 0.7 ? '⭐⭐⭐' : 
+                           parseFloat(metric.value) > 0.5 ? '⭐⭐' : 
+                           parseFloat(metric.value) > 0.3 ? '⭐' : ''}
+                        </motion.span>
+                      </div>
+                    </motion.div>
+                  ))}
                 </div>
               ) : (
                 <div className="text-center py-10">
@@ -344,6 +374,15 @@ export default function Dashboard() {
                         <p className="text-2xl font-bold text-gray-900">{localRewardsHistory.length}</p>
                       </div>
                     </div>
+                    <motion.div 
+                      className="w-12 h-12 flex items-center justify-center"
+                      animate={{ rotate: 360 }}
+                      transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
+                    >
+                      <svg viewBox="0 0 24 24" fill="none" className="w-full h-full text-yellow-500">
+                        <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" fill="currentColor" />
+                      </svg>
+                    </motion.div>
                   </div>
                 </motion.div>
                 
@@ -359,10 +398,17 @@ export default function Dashboard() {
                         <span className="text-white text-lg">💰</span>
                       </div>
                       <div className="ml-3">
-                        <h4 className="text-sm font-medium text-gray-900">Points Earned</h4>
-                        <p className="text-2xl font-bold text-gray-900">+{localRewardsHistory.reduce((sum, reward) => sum + parseInt(reward.points.replace('+', '')), 0)}</p>
+                        <h4 className="text-sm font-medium text-gray-900">Points Redeemed</h4>
+                        <p className="text-2xl font-bold text-gray-900">{pointsRedeemed}</p>
                       </div>
                     </div>
+                    <motion.div 
+                      animate={{ y: [0, -5, 0] }}
+                      transition={{ duration: 2, repeat: Infinity }}
+                      className="text-3xl"
+                    >
+                      💸
+                    </motion.div>
                   </div>
                 </motion.div>
                 
@@ -382,6 +428,13 @@ export default function Dashboard() {
                         <p className="text-lg font-bold text-gray-900">{localRewardsHistory[0]?.reward || 'None'}</p>
                       </div>
                     </div>
+                    <motion.div 
+                      animate={{ scale: [1, 1.1, 1] }}
+                      transition={{ duration: 2, repeat: Infinity }}
+                      className="text-3xl"
+                    >
+                      🎉
+                    </motion.div>
                   </div>
                 </motion.div>
               </div>
@@ -392,7 +445,7 @@ export default function Dashboard() {
                     <tr>
                       <th scope="col" className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">Date</th>
                       <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Reward</th>
-                      <th scope="col" className="px-3 py-3.5 text-right text-sm font-semibold text-gray-900">Points</th>
+                      <th scope="col" className="px-3 py-3.5 text-right text-sm font-semibold text-gray-900">Points Redeemed</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-gray-200 bg-white">
@@ -405,8 +458,22 @@ export default function Dashboard() {
                         className="hover:bg-gray-50 transition-colors"
                       >
                         <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">{reward.date}</td>
-                        <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{reward.reward}</td>
-                        <td className="whitespace-nowrap px-3 py-4 text-sm text-green-600 text-right font-medium">{reward.points}</td>
+                        <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                          <div className="flex items-center">
+                            <span className="w-8 h-8 flex items-center justify-center bg-indigo-100 rounded-full mr-2 text-indigo-600">
+                              {reward.reward.includes('Gold') ? '🏆' : 
+                               reward.reward.includes('Daily') ? '📅' : 
+                               reward.reward.includes('T-shirt') ? '👕' : 
+                               reward.reward.includes('Headset') ? '🎧' : 
+                               reward.reward.includes('Coffee') ? '☕' : 
+                               reward.reward.includes('WFH') ? '🏠' : 
+                               reward.reward.includes('Sipper') ? '🥤' : 
+                               reward.reward.includes('Cheers') ? '🎉' : '🎁'}
+                            </span>
+                            {reward.reward}
+                          </div>
+                        </td>
+                        <td className="whitespace-nowrap px-3 py-4 text-sm text-red-600 text-right font-medium">-500</td>
                       </motion.tr>
                     ))}
                   </tbody>

@@ -120,3 +120,88 @@ body {
 .badge-pulse {
   animation: pulse-badge 2s infinite;
 }
+
+/* Hexagon Shield Styles */
+.hexagon-shield {
+  width: 30px;
+  height: 30px;
+  background-color: #FFD700;
+  position: relative;
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.7);
+}
+
+.hexagon-content {
+  width: 26px;
+  height: 26px;
+  background-color: #FFD700;
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #000;
+  font-weight: bold;
+}
+
+.hexagon-shield-small {
+  width: 24px;
+  height: 24px;
+  background-color: #FFD700;
+  position: relative;
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 5px rgba(255, 215, 0, 0.7);
+}
+
+.hexagon-content-small {
+  width: 20px;
+  height: 20px;
+  background-color: #FFD700;
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #000;
+  font-weight: bold;
+  font-size: 0.75rem;
+}
+
+/* Wheel Pointer Styles */
+.wheel-pointer {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40px;
+  height: 40px;
+  z-index: 20;
+  filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.5));
+}
+
+.wheel-pointer-triangle {
+  width: 0;
+  height: 0;
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+  border-top: 30px solid #F93827;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.wheel-pointer-circle {
+  width: 20px;
+  height: 20px;
+  background-color: #F93827;
+  border: 3px solid #ffee34;
+  border-radius: 50%;
+  position: absolute;
+  top: -10px;
+  left: 10px;
+  box-shadow: 0 0 10px rgba(249, 56, 39, 0.7);
+}

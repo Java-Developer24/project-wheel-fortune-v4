@@ -109,7 +109,6 @@ function SpinningWheel() {
       console.error('Error sending email:', error);
     }
   };
-
   const handleSpinClick = () => {
     if (!currentGuide) {
       setShowDialog(true);
@@ -167,13 +166,24 @@ function SpinningWheel() {
   };
 
   const updateGuideRewards = (guide, prize) => {
-    
-    
-    // Add the reward to the auth store
+    // Update the guide's rewards in the store
     addReward(prize);
     
+    // Deduct points for spinning (500 points per spin)
+    const updatedPoints = Math.max(0, parseInt(guide.Points) - 500);
+    guide.Points = updatedPoints.toString();
+    
+    // Add the prize to the guide's rewards
+    if (guide.rewards) {
+      guide.rewards += `, ${prize}`;
+    } else {
+      guide.rewards = prize;
+    }
+    
     console.log(`Updated rewards for ${guide.name} (${guide.ID}): ${prize}`);
+    console.log(`Updated points for ${guide.name} (${guide.ID}): ${guide.Points}`);
   };
+
   const handleClaimPrize = () => {
     if (currentGuide && winningPrize) {
       sendPrizeEmail(currentGuide, winningPrize);
@@ -482,3 +492,4 @@ function SpinningWheel() {
 }
 
 export default SpinningWheel;
+
