@@ -41,7 +41,7 @@ export default function Navbar() {
                   
                 <img
                     className="h-24 w-auto rounded p-2 "
-                   src="/public/genpact_logo_white.png"
+                   src="/genpact_logo_white.png"
                     alt="Genpact"
                   />
                   <b className='h-auto w-auto'>|</b>
