@@ -328,7 +328,7 @@ function SpinningWheel() {
   
   return (
     <motion.div 
-      className="app-container bg-gradient-to-r from-[#1a237e] via-[#4a148c] to-[#880e4f] pb-40 px-2 sm:px-6 lg:px-8 no-scrollbar"
+      className="app-container bg-gradient-to-r from-[#1a237e] via-[#4a148c] to-[#880e4f] pb-40 px-0 sm:px-6 lg:px-4 no-scrollbar"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
