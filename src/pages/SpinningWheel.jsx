@@ -12,20 +12,21 @@ import { gsap } from 'gsap';
 
 // Define prizes directly in the component to avoid JSON loading issues
 const PRIZES = {
-  diamond: ['🎉 Cheers', '🌴 Earned Leave', '🎧 Premium Headset'],
-  gold: ['☕ Coffee with Tuhin', '🏠 WFH Perks'],
-  silver: ['🏠 WFH Perks', '👕 GD T-Shirt'],
-  bronze: ['👕 GD T-Shirt', '🍶 Water Bottle']
+  diamond: ["Cheers", "Shopping voucher", "Headset","Better luck next time"],
+  gold: ["Coffee mug ", "WFH perks ","Better luck next time"],
+  silver: [ "WFH perks","Better luck next time"],
+  bronze: [ "GoDaddy T-shirt", "Sipper","Better luck next time"]
 };
 
 const ALL_PRIZES = [
-  '🎉 Cheers',
-  '🌴 Earned Leave',
-  '🎧 Premium Headset',
-  '☕ Coffee with Tuhin',
-  '🏠 WFH Perks',
-  '👕 GD T-Shirt',
-  '🍶 Water Bottle'
+  '🎉 \n Cheers',
+  '🎧 \n Premium Headset',
+  '☕ \n Coffee mug',
+  '🏠 \n WFH Perks',
+  '👕 \n GD T-Shirt',
+  '🍶 \n Sipper',
+  "🍀 \n Better \n luck next\n time", 
+  "🎟️ \n Shopping voucher",
 ];
 
 function SpinningWheel() {
@@ -44,12 +45,12 @@ function SpinningWheel() {
 
   const wheelColors = ['#ffdf0e', '#9b59fb', '#eb7beb', '#b1ee31', '#2afcd5', '#20d087', '#3674B5'];
   const wheelData = currentPrizes.map((prize, index) => ({
-    option: prize,
+    option: prize.replace(/\s+/g, '\n'), // Replace spaces with new lines
     style: {
       backgroundColor: wheelColors[index % wheelColors.length],
       textColor: '#FFFFFF',
       fontWeight: 'bold',
-      textOrientation: 'vertical',
+      textOrientation: 'vertical',  // Ensure vertical text orientation
       textPosition: 'outer',
       boxShadow: `
         0 0 15px ${wheelColors[index % wheelColors.length]},
@@ -61,6 +62,8 @@ function SpinningWheel() {
       animation: 'glitter 2s ease-in-out infinite'
     }
   }));
+  
+  
 
   useEffect(() => {
     // Initialize the wheel based on the logged-in user

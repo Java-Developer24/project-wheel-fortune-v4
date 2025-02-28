@@ -50,14 +50,14 @@ export default function Navbar() {
                 <div className="flex flex-shrink-0 space-x-4 items-center">
                   
                 <img
-                    className="h-20 w-auto "
-                   src="/genpact_logo_white_v2.png"
+                    className="h-20 w-auto rounded p-1"
+                   src="/genlogo.jpg"
                     alt="Genpact"
                   />
                   
                   <img
-                    className="h-20 w-auto "
-                   src="/gdlogo.png" 
+                    className="h-20 w-auto rounded p-1"
+                   src="/godaddylogos.jpg" 
                     alt="GoDaddy"
                   />
                  
