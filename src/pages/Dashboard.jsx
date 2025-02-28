@@ -77,7 +77,7 @@ export default function Dashboard() {
     switch(metric) {
       case 'Refund%':
         return numValue < 5 ? 'Excellent' : 'Needs Improvement';
-      case 'NRPC':
+      case 'NRPC $':
         return numValue > 25 ? 'Excellent' : 'Needs Improvement';
       case 'New Revenue %':
         return numValue > 100 ? 'Excellent' : 'Needs Improvement';
@@ -88,7 +88,7 @@ export default function Dashboard() {
       case 'CPD':
         return numValue > 20 ? 'Excellent' : 'Needs Improvement';
       case 'WOW Learning':
-        return numValue > 0.7 ? 'Excellent' : 'Needs Improvement';
+        return numValue > 70 ? 'Excellent' : 'Needs Improvement';
       default:
         return 'N/A';
     }
@@ -104,7 +104,7 @@ export default function Dashboard() {
     switch(metric) {
       case 'Refund%':
         return `${Math.min(100 - (numValue * 20), 100)}%`; // Lower is better
-      case 'NRPC':
+      case 'NRPC $':
         return `${Math.min((numValue / 25) * 100, 100)}%`;
       case 'New Revenue %':
         return `${Math.min((numValue / 100) * 100, 100)}%`;
@@ -125,8 +125,8 @@ export default function Dashboard() {
     switch(metric) {
       case 'Refund%':
         return 'Target: <5%';
-      case 'NRPC':
-        return 'Target: $25';
+      case 'NRPC $':
+        return 'Target: 25.00$';
       case 'New Revenue %':
         return 'Target: 100%';
       case 'New con%':
@@ -136,7 +136,7 @@ export default function Dashboard() {
       case 'CPD':
         return 'Target: 20';
       case 'WOW Learning':
-        return 'Target: 0.7';
+        return 'Target: 70%';
       default:
         return '';
     }
@@ -144,7 +144,7 @@ export default function Dashboard() {
 
   const performanceMetrics = userGuide ? [
     { name: 'Refund%', value: userGuide['Refund%'], color: 'from-blue-400 to-blue-600' },
-    { name: 'NRPC', value: userGuide['NRPC'], color: 'from-purple-400 to-purple-600' },
+    { name: 'NRPC $', value: userGuide['NRPC'], color: 'from-purple-400 to-purple-600' },
     { name: 'New Revenue %', value: userGuide['New Revenue %'], color: 'from-green-400 to-green-600' },
     { name: 'New con%', value: userGuide['New con%'], color: 'from-yellow-400 to-yellow-600' },
     { name: 'NPS', value: userGuide['NPS'], color: 'from-red-400 to-red-600' },
