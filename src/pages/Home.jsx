@@ -59,7 +59,7 @@ export default function Home() {
               }}
             >
               <img 
-                src="/trophy.webp" 
+                src="/trophyy.webp" 
                 alt="GoDaddy Logo" 
                 className="w-40 h-40 object-contain rounded-lg"
               />

@@ -117,21 +117,21 @@ export default function Leaderboard() {
                   {/* Shield with level info */}
                   <div className="mr-4 relative">
                     <motion.div 
-                      className="w-16 h-16 flex items-center justify-center"
+                      className="w-16 h-16 flex items-center justify-center mt-2"
                       animate={{ scale: [1, 1.1, 1] }}
                       transition={{ duration: 2, repeat: Infinity }}
                     >
-                      <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-yellow-400 to-yellow-600 rounded-lg transform rotate-45"></div>
-                      <div className="absolute inset-2 w-[calc(100%-16px)] h-[calc(100%-16px)] bg-gradient-to-r from-yellow-300 to-yellow-500 rounded-lg transform rotate-45 flex items-center justify-center">
-                        <span className="text-white text-xl font-bold transform -rotate-45">
+                      <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-yellow-400 to-yellow-600 rounded-lg transform rotate-45 "></div>
+                      <div className="absolute inset-2 w-[calc(100%-16px)] h-[calc(100%-16px)] bg-gradient-to-r from-yellow-300 to-yellow-500 rounded-lg transform rotate-45 flex items-center justify-center ">
+                        <span className="text-white text-xl font-bold transform -rotate-45 mr">
                           {getLevelShield(currentUserRank.Rank)}
                         </span>
                       </div>
                     </motion.div>
-                    <div className="text-center text-white text-xs mt-1">Level Shield</div>
+                    <div className="text-center text-white text-xs mt-6 ">Level</div>
                   </div>
                   
-                  <div className="flex items-center bg-white/20 rounded-lg p-3">
+                  <div className="flex items-center bg-white/20 rounded-lg p-3 mb-5 ml-2">
                     <div className="mr-4 text-center">
                       <div className="text-sm text-gray-200">Points</div>
                       <div className="text-2xl font-bold text-yellow-400">{parseInt(currentUserRank.Points).toLocaleString()}</div>

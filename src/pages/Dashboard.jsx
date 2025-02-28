@@ -50,9 +50,9 @@ export default function Dashboard() {
     // If no rewards are found, add some default ones
     if (combinedRewards.length === 0) {
       combinedRewards.push(
-        { date: '2024-02-10', reward: 'Gold Prize', points: '-500' },
-        { date: '2024-02-09', reward: 'Daily Login', points: '-100' },
-        { date: '2024-02-08', reward: 'Completed Challenge', points: '-300' }
+        { date: '2024-02-10', reward: 'Shopping Voucher', points: '-500' },
+        { date: '2024-02-09', reward: 'Cheers', points: '-500' },
+        { date: '2024-02-08', reward: 'Premium Headset', points: '-500' }
       );
     }
     
@@ -313,7 +313,7 @@ export default function Dashboard() {
                             </span>
                           </div>
                         </div>
-                        <span className="mt-2 text-sm font-medium text-gray-700">Level Shield</span>
+                        <span className="mt-2 text-sm font-medium text-gray-700">Level</span>
                       </div>
                     </div>
                   </div>
@@ -347,7 +347,7 @@ export default function Dashboard() {
                               <div className="flex items-center">
                                 <span className="w-8 h-8 flex items-center justify-center bg-amber-100 rounded-full mr-2 text-amber-600">
                                   {reward.reward.includes('Gold') ? '🏆' : 
-                                   reward.reward.includes('Daily') ? '📅' : '🎁'}
+                                   reward.reward.includes('Daily') ? '📅' : '🏆'}
                                 </span>
                                 {reward.reward}
                               </div>
@@ -527,8 +527,8 @@ export default function Dashboard() {
                         <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                           <div className="flex items-center">
                             <span className="w-8 h-8 flex items-center justify-center bg-indigo-100 rounded-full mr-2 text-indigo-600">
-                              {reward.reward.includes('Gold') ? '🏆' : 
-                               reward.reward.includes('Daily') ? '📅' : 
+                              {reward.reward.includes('Shopping') ? '🛒' : 
+                               reward.reward.includes('Mug') ? '📅' : 
                                reward.reward.includes('T-shirt') ? '👕' : 
                                reward.reward.includes('Headset') ? '🎧' : 
                                reward.reward.includes('Coffee') ? '☕' : 

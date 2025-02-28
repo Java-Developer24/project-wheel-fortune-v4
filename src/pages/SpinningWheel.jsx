@@ -7,6 +7,7 @@ import useAuthStore from '../store/authStore';
 import '../App.css';
 import {Scene3D} from '../components/Scene3D';
 import { Decorations3D } from '../components/Decorations3D';
+import { FloatingBalloons } from '../components/FloatingBalloons';
 
 function SpinningWheel() {
   const [mustSpin, setMustSpin] = useState(false);
@@ -17,7 +18,7 @@ function SpinningWheel() {
   const [showWheel, setShowWheel] = useState(false);
   const [winningPrize, setWinningPrize] = useState('');
   const [currentGuide, setCurrentGuide] = useState(null);
-  const [selectedPrize, setSelectedPrize] = useState(null);
+  const [selectedPrize, setSelectedPrize] = useState('');
   const [isPlaceholderSpinning, setIsPlaceholderSpinning] = useState(true);
   const { user, addReward } = useAuthStore();
 
@@ -314,13 +315,17 @@ function SpinningWheel() {
       <div className="decorative-circle circle-1"></div>
       <div className="decorative-circle circle-2"></div>
       
+      
       <motion.div 
         className="wheel-section"
         initial={{ y: 20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.5, delay: 0.2 }}
       >
+        
         <Scene3D />
+        
+
         <div className="trophy-icon">🏆</div>
         <motion.div 
           className="logo-container"
@@ -360,7 +365,7 @@ function SpinningWheel() {
         </motion.div>
         
         <div className="wheel-container">
-       
+        
           <div className="wheel-outer">
             <div className="wheel-ring-outer"></div>
             <div className="wheel-ring-middle"></div>
@@ -385,9 +390,10 @@ function SpinningWheel() {
                   radiusLineColor="rgba(255, 255, 255, 0.5)"
                   radiusLineWidth={2}
                   textDistance={85}
-                  fontSize={15}
+                  fontSize={16}
                   spinDuration={0.8}
                   perpendicularText={true}
+                  overflow="hidden"
                 />
                 <motion.div 
                   className="wheel-center"

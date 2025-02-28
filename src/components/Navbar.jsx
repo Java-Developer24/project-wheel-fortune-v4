@@ -40,13 +40,13 @@ export default function Navbar() {
                 <div className="flex flex-shrink-0 space-x-4 items-center">
                   
                 <img
-                    className="h-28 w-auto "
+                    className="h-20 w-auto "
                    src="/genpact_logo_white_v2.png"
                     alt="Genpact"
                   />
                   
                   <img
-                    className="h-28 w-auto p-1"
+                    className="h-20 w-auto "
                    src="/gdlogo.png" 
                     alt="GoDaddy"
                   />
@@ -60,7 +60,7 @@ export default function Navbar() {
                         to={item.href}
                         className={classNames(
                           item.current ? 'bg-opacity-25 text-white' : 'text-gray-300 hover:bg-opacity-25 hover:text-white',
-                          'rounded-md px-3 py-10 text-lg font-medium'
+                          'rounded-md px-3 py-5 text-lg font-medium'
                         )}
                         aria-current={item.current ? 'page' : undefined}
                       >
