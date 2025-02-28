@@ -129,3 +129,8 @@ src/
 1. Edit `guides.json`
 2. Update user information
 3. Ensure proper tier assignment
+
+
+
+
+hey bolt . remove the scroll bar from the spin wheel page as well, try to make that prizes logo appear below the prize names  and also we want our  wheel pointer to be on top side of the wheel and make it look like in the screenshot  and also try to add those floating 3d ballons on right and left side of wheel of 3 ballons on right and 3 on left side and our complete wheel is getttin spining whne we click on spin as it only need to inner one adn while revealing as well it getting spin complete wheel which we dont want only inner wheel should spin and the wheel spin slowly for atleat 10 seconds and reveal the prize . now start 
