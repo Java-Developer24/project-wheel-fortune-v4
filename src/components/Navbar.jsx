@@ -70,7 +70,7 @@ export default function Navbar() {
                         to={item.href}
                         className={classNames(
                           item.current ? 'bg-opacity-25 text-white bg-white/20' : 'text-gray-300 hover:bg-opacity-25 hover:text-white',
-                          'rounded-md px-3 py-5 text-lg font-medium'
+                          'rounded-md px-3 py-6 text-lg font-medium'
                         )}
                         aria-current={item.current ? 'page' : undefined}
                       >

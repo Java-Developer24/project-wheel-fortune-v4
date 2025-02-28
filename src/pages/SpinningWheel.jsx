@@ -45,24 +45,16 @@ function SpinningWheel() {
 
   const wheelColors = ['#ffdf0e', '#9b59fb', '#eb7beb', '#b1ee31', '#2afcd5', '#20d087', '#3674B5'];
   const wheelData = currentPrizes.map((prize, index) => ({
-    option: prize.replace(/\s+/g, '\n'), // Replace spaces with new lines
+    option: prize.replace(/\\n/g, '\n'),  // Ensure line breaks are interpreted
     style: {
       backgroundColor: wheelColors[index % wheelColors.length],
       textColor: '#FFFFFF',
       fontWeight: 'bold',
-      textOrientation: 'vertical',  // Ensure vertical text orientation
+      textOrientation: 'horizontal', // Change from 'vertical' to 'horizontal'
       textPosition: 'outer',
-      boxShadow: `
-        0 0 15px ${wheelColors[index % wheelColors.length]},
-        inset 0 0 20px rgba(255, 255, 255, 0.5),
-        0 0 30px ${wheelColors[index % wheelColors.length]},
-        inset 0 0 10px ${wheelColors[index % wheelColors.length]}
-      `,
-      textShadow: '0 0 5px rgba(255, 255, 255, 0.8)',
-      animation: 'glitter 2s ease-in-out infinite'
+      whiteSpace: 'pre-line', // Ensure line breaks work
     }
   }));
-  
   
 
   useEffect(() => {
@@ -336,7 +328,7 @@ function SpinningWheel() {
   
   return (
     <motion.div 
-      className="app-container bg-gradient-to-r from-[#1a237e] via-[#4a148c] to-[#880e4f] py-12 px-4 sm:px-6 lg:px-8 no-scrollbar"
+      className="app-container bg-gradient-to-r from-[#1a237e] via-[#4a148c] to-[#880e4f] pb-40 px-2 sm:px-6 lg:px-8 no-scrollbar"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
