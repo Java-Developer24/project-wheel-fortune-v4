@@ -422,7 +422,7 @@ function SpinningWheel() {
                     radiusLineWidth={2}
                     textDistance={85}
                     fontSize={16}
-                    spinDuration={10} // Increased spin duration to 10 seconds
+                    spinDuration={3} // Increased spin duration to 10 seconds
                     perpendicularText={true}
                   />
                 )}
