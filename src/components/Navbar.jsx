@@ -1,15 +1,14 @@
-import { Fragment } from 'react';
-import { Link } from 'react-router-dom';
+import { Fragment, useEffect, useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { Disclosure, Menu, Transition } from '@headlessui/react';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import useAuthStore from '../store/authStore';
 
 const navigation = [
-  { name: 'Home', href: '/', current: true },
+  { name: 'Home', href: '/', current: false },
   { name: 'Spin Zone', href: '/wheel', current: false },
   { name: 'Champion\'s Corner', href: '/leaderboard', current: false },
   { name: 'My Rewards Hub', href: '/dashboard', current: false },
-  
 ];
 
 function classNames(...classes) {
@@ -18,6 +17,17 @@ function classNames(...classes) {
 
 export default function Navbar() {
   const { user, isAuthenticated, logout } = useAuthStore();
+  const location = useLocation();
+  const [currentNavigation, setCurrentNavigation] = useState(navigation);
+
+  useEffect(() => {
+    // Update the current property based on the current location
+    const updatedNavigation = navigation.map(item => ({
+      ...item,
+      current: item.href === location.pathname
+    }));
+    setCurrentNavigation(updatedNavigation);
+  }, [location]);
 
   return (
     <Disclosure as="nav" className="nav-gradient">
@@ -54,12 +64,12 @@ export default function Navbar() {
                 </div>
                 <div className="hidden sm:ml-6 sm:block">
                   <div className="flex space-x-5">
-                    {navigation.map((item) => (
+                    {currentNavigation.map((item) => (
                       <Link
                         key={item.name}
                         to={item.href}
                         className={classNames(
-                          item.current ? 'bg-opacity-25 text-white' : 'text-gray-300 hover:bg-opacity-25 hover:text-white',
+                          item.current ? 'bg-opacity-25 text-white bg-white/20' : 'text-gray-300 hover:bg-opacity-25 hover:text-white',
                           'rounded-md px-3 py-5 text-lg font-medium'
                         )}
                         aria-current={item.current ? 'page' : undefined}
@@ -139,7 +149,7 @@ export default function Navbar() {
 
           <Disclosure.Panel className="sm:hidden">
             <div className="space-y-1 px-2 pb-3 pt-2">
-              {navigation.map((item) => (
+              {currentNavigation.map((item) => (
                 <Disclosure.Button
                   key={item.name}
                   as={Link}

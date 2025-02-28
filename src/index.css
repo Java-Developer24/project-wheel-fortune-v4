@@ -17,6 +17,8 @@ body {
   min-height: 100vh;
   color: white;
   overflow-y: auto;
+  max-width: 1920px;
+  margin: 0 auto;
 }
 
 /* Hide scrollbar for Chrome, Safari and Opera */
