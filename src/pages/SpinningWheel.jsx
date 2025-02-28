@@ -417,7 +417,7 @@ function SpinningWheel() {
                     radiusLineWidth={2}
                     textDistance={85}
                     fontSize={16}
-                    spinDuration={3} // Increased spin duration to 10 seconds
+                    spinDuration={1} // Increased spin duration to 10 seconds
                     perpendicularText={true}
                   />
                 )}
@@ -447,7 +447,7 @@ function SpinningWheel() {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
         >
-          {showWheel ? 'SPIN' : 'Game On!'}
+          {showWheel ? '500 🎟️' : 'SPIN'}
         </motion.button>
       </motion.div>
 
