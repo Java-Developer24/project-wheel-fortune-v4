@@ -87,11 +87,9 @@ export default function Navbar() {
                       <Menu.Button className="relative flex rounded-full bg-opacity-25 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                         <span className="absolute -inset-1.5" />
                         <span className="sr-only">Open user menu</span>
-                        <img
-                          className="h-14 w-14 rounded-full border-2"
-                          src={user.avatar}
-                          alt=""
-                        />
+                        <div className="h-14 w-14 rounded-full border-2 border-white flex items-center justify-center bg-purple-600 text-white text-xl font-bold">
+                          {user.name ? user.name.charAt(0).toUpperCase() : "U"}
+                        </div>
                       </Menu.Button>
                     </div>
                     <Transition

@@ -1,13 +1,32 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Wheel } from 'react-custom-roulette';
 import { motion, AnimatePresence } from 'framer-motion';
 import Dialog from '@mui/material/Dialog';
 import guidesData from '../data/guides.json';
 import useAuthStore from '../store/authStore';
 import '../App.css';
-import {Scene3D} from '../components/Scene3D';
+import { Scene3D } from '../components/Scene3D';
 import { Decorations3D } from '../components/Decorations3D';
 import { FloatingBalloons } from '../components/FloatingBalloons';
+import { gsap } from 'gsap';
+
+// Define prizes directly in the component to avoid JSON loading issues
+const PRIZES = {
+  diamond: ['🎉 Cheers', '🌴 Earned Leave', '🎧 Premium Headset'],
+  gold: ['☕ Coffee with Tuhin', '🏠 WFH Perks'],
+  silver: ['🏠 WFH Perks', '👕 GD T-Shirt'],
+  bronze: ['👕 GD T-Shirt', '🍶 Water Bottle']
+};
+
+const ALL_PRIZES = [
+  '🎉 Cheers',
+  '🌴 Earned Leave',
+  '🎧 Premium Headset',
+  '☕ Coffee with Tuhin',
+  '🏠 WFH Perks',
+  '👕 GD T-Shirt',
+  '🍶 Water Bottle'
+];
 
 function SpinningWheel() {
   const [mustSpin, setMustSpin] = useState(false);
@@ -18,9 +37,10 @@ function SpinningWheel() {
   const [showWheel, setShowWheel] = useState(false);
   const [winningPrize, setWinningPrize] = useState('');
   const [currentGuide, setCurrentGuide] = useState(null);
-  const [selectedPrize, setSelectedPrize] = useState('');
+  const [selectedPrize, setSelectedPrize] = useState(null);
   const [isPlaceholderSpinning, setIsPlaceholderSpinning] = useState(true);
   const { user, addReward } = useAuthStore();
+  const textRef = useRef(null);
 
   const wheelColors = ['#ffdf0e', '#9b59fb', '#eb7beb', '#b1ee31', '#2afcd5', '#20d087', '#3674B5'];
   const wheelData = currentPrizes.map((prize, index) => ({
@@ -141,19 +161,25 @@ function SpinningWheel() {
   const initializeWheel = () => {
     if (currentGuide) {
       const bucket = currentGuide.bucket;
-      const allPrizes = guidesData.allPrizes;
-      const userBucketPrizes = guidesData.prizes[bucket];
+      const userBucketPrizes = PRIZES[bucket] || PRIZES.bronze;
       
       const winningPrizeIndex = Math.floor(Math.random() * userBucketPrizes.length);
       console.log(`Winning prize index: ${winningPrizeIndex}`);
       const selectedPrize = userBucketPrizes[winningPrizeIndex];
       
-      setCurrentPrizes(allPrizes);
+      setCurrentPrizes(ALL_PRIZES.map(prize => {
+        const words = prize.split(' ');  
+        if (words.length > 1) {
+          return words.slice(0, Math.ceil(words.length / 2)).join(' ') + '\n' + words.slice(Math.ceil(words.length / 2)).join(' ');
+        }
+        return prize;
+      }));
+      
       setBucketPrizes(userBucketPrizes);
       setShowWheel(true);
       
-      const prizeIndexInWheel = allPrizes.findIndex(prize => prize === selectedPrize);
-      setSelectedPrize(prizeIndexInWheel);
+      const prizeIndexInWheel = ALL_PRIZES.findIndex(prize => prize === selectedPrize);
+      setSelectedPrize(prizeIndexInWheel >= 0 ? prizeIndexInWheel : 0);
       setWinningPrize(selectedPrize);
       
       console.log(`Selected prize bucket: ${bucket}`);
@@ -307,7 +333,7 @@ function SpinningWheel() {
   
   return (
     <motion.div 
-      className="app-container bg-gradient-to-r from-[#1a237e] via-[#4a148c] to-[#880e4f] py-12 px-4 sm:px-6 lg:px-8"
+      className="app-container bg-gradient-to-r from-[#1a237e] via-[#4a148c] to-[#880e4f] py-12 px-4 sm:px-6 lg:px-8 no-scrollbar"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
@@ -315,6 +341,8 @@ function SpinningWheel() {
       <div className="decorative-circle circle-1"></div>
       <div className="decorative-circle circle-2"></div>
       
+      <FloatingBalloons side="left" />
+      <FloatingBalloons side="right" />
       
       <motion.div 
         className="wheel-section"
@@ -322,9 +350,13 @@ function SpinningWheel() {
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.5, delay: 0.2 }}
       >
-        
         <Scene3D />
-        
+
+        {/* Wheel pointer at the top */}
+        {/* <div className="wheel-pointer">
+          <div className="wheel-pointer-triangle"></div>
+          <div className="wheel-pointer-circle"></div>
+        </div> */}
 
         <div className="trophy-icon">🏆</div>
         <motion.div 
@@ -365,7 +397,6 @@ function SpinningWheel() {
         </motion.div>
         
         <div className="wheel-container">
-        
           <div className="wheel-outer">
             <div className="wheel-ring-outer"></div>
             <div className="wheel-ring-middle"></div>
@@ -376,25 +407,25 @@ function SpinningWheel() {
               <motion.div 
                 className="wheel-content"
                 initial={{ rotate: 0 }}
-                // animate={{ rotate: mustSpin ? 0 : 0 }}
                 transition={{ duration: 0.8, ease: "easeInOut" }}
               >
-                <Wheel
-                  mustStartSpinning={mustSpin}
-                  prizeNumber={prizeNumber}
-                  data={wheelData}
-                  onStopSpinning={handleSpinStop}
-                  outerBorderColor="rgba(255, 255, 255, 0.8)"
-                  outerBorderWidth={4}
-                  innerRadius={20}
-                  radiusLineColor="rgba(255, 255, 255, 0.5)"
-                  radiusLineWidth={2}
-                  textDistance={85}
-                  fontSize={16}
-                  spinDuration={0.8}
-                  perpendicularText={true}
-                  overflow="hidden"
-                />
+                {wheelData.length > 0 && (
+                  <Wheel
+                    mustStartSpinning={mustSpin}
+                    prizeNumber={prizeNumber}
+                    data={wheelData}
+                    onStopSpinning={handleSpinStop}
+                    outerBorderColor="rgba(255, 255, 255, 0.8)"
+                    outerBorderWidth={4}
+                    innerRadius={20}
+                    radiusLineColor="rgba(255, 255, 255, 0.5)"
+                    radiusLineWidth={2}
+                    textDistance={85}
+                    fontSize={16}
+                    spinDuration={10} // Increased spin duration to 10 seconds
+                    perpendicularText={true}
+                  />
+                )}
                 <motion.div 
                   className="wheel-center"
                   animate={{ scale: [1, 1.1, 1] }}
