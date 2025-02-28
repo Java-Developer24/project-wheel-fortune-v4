@@ -27,15 +27,26 @@ body {
   color: #ffffff;
 }
 
+/* Hide scrollbar for Chrome, Safari and Opera */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.no-scrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
 .app-container {
   min-height: 100vh;
- 
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   padding: 2rem;
   position: relative;
+  overflow: hidden;
 }
 
 .decorative-circle {
@@ -173,7 +184,6 @@ body {
   height: 96%;
   border-radius: 50%;
   border: 30px solid rgba(0, 0, 0, 0.925);
-  animation: spin 10s linear infinite;
   box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.3);
 }
 
@@ -183,7 +193,6 @@ body {
   height: 90%;
   border-radius: 50%;
   border: 30px solid #20d087;
-  animation: spin 8s linear infinite reverse;
   box-shadow: inset 0 0 15px rgba(32, 208, 135, 0.3);
 }
 
@@ -193,7 +202,6 @@ body {
   height: 85%;
   border-radius: 50%;
   border: 25px solid #ffdf0e;
-  animation: spin 8s linear infinite reverse;
   box-shadow: inset 0 0 15px rgba(255, 223, 14, 0.3);
 }
 
@@ -326,7 +334,6 @@ body {
   border-left: 2px solid rgba(0, 0, 0, 0.3);
   box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
 }
-
 
 .spin-button {
   position: relative;
@@ -517,4 +524,74 @@ body {
   0% { transform: translateX(-50%) translateY(0); }
   50% { transform: translateX(-50%) translateY(-10px); }
   100% { transform: translateX(-50%) translateY(0); }
+}
+
+/* Wheel Pointer Styles */
+.wheel-pointer {
+  position: absolute;
+  top: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40px;
+  height: 40px;
+  z-index: 20;
+  filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.5));
+}
+
+.wheel-pointer-triangle {
+  width: 0;
+  height: 0;
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+  border-top: 30px solid #F93827;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.wheel-pointer-circle {
+  width: 20px;
+  height: 20px;
+  background-color: #F93827;
+  border: 3px solid #ffee34;
+  border-radius: 50%;
+  position: absolute;
+  top: -10px;
+  left: 10px;
+  box-shadow: 0 0 10px rgba(249, 56, 39, 0.7);
+}
+
+/* Balloon container styles */
+.left-balloons, .right-balloons {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 150px;
+  z-index: 5;
+  pointer-events: none;
+}
+
+.left-balloons {
+  left: -150px;
+}
+
+.right-balloons {
+  right: -150px;
+}
+
+/* Prize image styles */
+.prize-image-container {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: translateY(30px);
+}
+
+.prize-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }

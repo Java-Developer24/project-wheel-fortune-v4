@@ -371,7 +371,7 @@ function SpinningWheel() {
               <motion.div 
                 className="wheel-content"
                 initial={{ rotate: 0 }}
-                animate={{ rotate: mustSpin ? 1080 : 0 }}
+                // animate={{ rotate: mustSpin ? 0 : 0 }}
                 transition={{ duration: 0.8, ease: "easeInOut" }}
               >
                 <Wheel

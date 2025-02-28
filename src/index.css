@@ -19,6 +19,17 @@ body {
   overflow-y: auto;
 }
 
+/* Hide scrollbar for Chrome, Safari and Opera */
+::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+* {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
 .nav-gradient {
   background: linear-gradient(to right, var(--primary-bg), var(--secondary-bg));
 }
@@ -172,39 +183,4 @@ body {
   color: #000;
   font-weight: bold;
   font-size: 0.75rem;
-}
-
-/* Wheel Pointer Styles */
-.wheel-pointer {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 40px;
-  height: 40px;
-  z-index: 20;
-  filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.5));
-}
-
-.wheel-pointer-triangle {
-  width: 0;
-  height: 0;
-  border-left: 20px solid transparent;
-  border-right: 20px solid transparent;
-  border-top: 30px solid #F93827;
-  position: absolute;
-  top: 0;
-  left: 0;
-}
-
-.wheel-pointer-circle {
-  width: 20px;
-  height: 20px;
-  background-color: #F93827;
-  border: 3px solid #ffee34;
-  border-radius: 50%;
-  position: absolute;
-  top: -10px;
-  left: 10px;
-  box-shadow: 0 0 10px rgba(249, 56, 39, 0.7);
 }
