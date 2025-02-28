@@ -79,7 +79,7 @@ function SpinningWheel() {
     if (isPlaceholderSpinning) {
       confettiInterval = setInterval(() => {
         createConfetti(50); // Reduced number of confetti particles
-      }, 2000); // Increased interval
+      }, 8000); // Increased interval
     }
     return () => clearInterval(confettiInterval);
   }, [isPlaceholderSpinning]);
