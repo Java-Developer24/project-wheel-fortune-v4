@@ -12,12 +12,39 @@ const useAuthStore = create(
       rewardsHistory: [],
 
       login: (username, password) => {
+        // First try to find the user in the users.json file
         const user = users.users.find(
           (u) => u.username === username && u.password === password
         );
 
         if (user) {
           set({ user, isAuthenticated: true, error: null });
+          return true;
+        }
+
+        // If not found in users.json, try to find in guides.json
+        const guideName = username.split('_').map(word => 
+          word.charAt(0).toUpperCase() + word.slice(1)
+        ).join(' ');
+        
+        const guide = guidesData.guides.find(g => 
+          g['name'].toLowerCase() === guideName.toLowerCase() && password === 'password123'
+        );
+
+        if (guide) {
+          // Create a user object from guide data
+          const guideUser = {
+            id: guide.ID,
+            username: username,
+            password: password,
+            name: guide.name,
+            avatar: `https://api.dicebear.com/7.x/avataaars/svg?seed=${guide.name}`,
+            points: parseInt(guide.Points),
+            rank: parseInt(guide.Rank),
+            achievements: [guide.bucket + " Tier"]
+          };
+          
+          set({ user: guideUser, isAuthenticated: true, error: null });
           return true;
         }
 

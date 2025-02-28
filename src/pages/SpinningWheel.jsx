@@ -7,22 +7,19 @@ import useAuthStore from '../store/authStore';
 import '../App.css';
 import {Scene3D} from '../components/Scene3D';
 import { Decorations3D } from '../components/Decorations3D';
-// import {TrophyModel} from './components/Prize3D';
 
 function SpinningWheel() {
   const [mustSpin, setMustSpin] = useState(false);
   const [prizeNumber, setPrizeNumber] = useState(0);
-  const [showDialog, setShowDialog] = useState(false);
-  const [guideId, setGuideId] = useState('');
+  const [showWinDialog, setShowWinDialog] = useState(false);
   const [currentPrizes, setCurrentPrizes] = useState([]);
   const [bucketPrizes, setBucketPrizes] = useState([]);
   const [showWheel, setShowWheel] = useState(false);
-  const [showWinDialog, setShowWinDialog] = useState(false);
   const [winningPrize, setWinningPrize] = useState('');
   const [currentGuide, setCurrentGuide] = useState(null);
   const [selectedPrize, setSelectedPrize] = useState(null);
   const [isPlaceholderSpinning, setIsPlaceholderSpinning] = useState(true);
-  const { addReward } = useAuthStore();
+  const { user, addReward } = useAuthStore();
 
   const wheelColors = ['#ffdf0e', '#9b59fb', '#eb7beb', '#b1ee31', '#2afcd5', '#20d087', '#3674B5'];
   const wheelData = currentPrizes.map((prize, index) => ({
@@ -43,6 +40,23 @@ function SpinningWheel() {
       animation: 'glitter 2s ease-in-out infinite'
     }
   }));
+
+  useEffect(() => {
+    // Initialize the wheel based on the logged-in user
+    if (user) {
+      const userName = user.username.split('_').map(word => 
+        word.charAt(0).toUpperCase() + word.slice(1)
+      ).join(' ');
+      
+      const guide = guidesData.guides.find(g => 
+        g['name'].toLowerCase() === userName.toLowerCase()
+      );
+      
+      if (guide) {
+        setCurrentGuide(guide);
+      }
+    }
+  }, [user]);
 
   useEffect(() => {
     let confettiInterval;
@@ -110,15 +124,39 @@ function SpinningWheel() {
       console.error('Error sending email:', error);
     }
   };
+
   const handleSpinClick = () => {
-    if (!currentGuide) {
-      setShowDialog(true);
+    if (!showWheel) {
+      initializeWheel();
       return;
     }
 
     if (!mustSpin && selectedPrize !== null) {
       setPrizeNumber(selectedPrize);
       setMustSpin(true);
+    }
+  };
+
+  const initializeWheel = () => {
+    if (currentGuide) {
+      const bucket = currentGuide.bucket;
+      const allPrizes = guidesData.allPrizes;
+      const userBucketPrizes = guidesData.prizes[bucket];
+      
+      const winningPrizeIndex = Math.floor(Math.random() * userBucketPrizes.length);
+      console.log(`Winning prize index: ${winningPrizeIndex}`);
+      const selectedPrize = userBucketPrizes[winningPrizeIndex];
+      
+      setCurrentPrizes(allPrizes);
+      setBucketPrizes(userBucketPrizes);
+      setShowWheel(true);
+      
+      const prizeIndexInWheel = allPrizes.findIndex(prize => prize === selectedPrize);
+      setSelectedPrize(prizeIndexInWheel);
+      setWinningPrize(selectedPrize);
+      
+      console.log(`Selected prize bucket: ${bucket}`);
+      createConfetti(100);
     }
   };
 
@@ -198,43 +236,10 @@ function SpinningWheel() {
     setBucketPrizes([]);
     setCurrentPrizes([]);
     setWinningPrize('');
-    setGuideId('');
     setShowWheel(false);
-    setCurrentGuide(null);
     setSelectedPrize(null);
     setIsPlaceholderSpinning(true);
     setTimeout(() => createConfetti(50), 500);
-  };
-  
-  const handleGuideIdSubmit = () => {
-    const guide = guidesData.guides.find(g => g.ID === guideId);
-    
-    if (guide) {
-      console.log(`Guide ${guide.name} (${guide.ID}) authenticated`);
-      setCurrentGuide(guide);
-      const bucket = guide.bucket;
-      const allPrizes = guidesData.allPrizes;
-      const userBucketPrizes = guidesData.prizes[bucket];
-      
-      const winningPrizeIndex = Math.floor(Math.random() * userBucketPrizes.length);
-      console.log(`Winning prize index: ${winningPrizeIndex}`);
-      const selectedPrize = userBucketPrizes[winningPrizeIndex];
-      
-      setCurrentPrizes(allPrizes);
-      setBucketPrizes(userBucketPrizes);
-      setShowDialog(false);
-      setShowWheel(true);
-      
-      const prizeIndexInWheel = allPrizes.findIndex(prize => prize === selectedPrize);
-      setSelectedPrize(prizeIndexInWheel);
-      setWinningPrize(selectedPrize);
-      
-      console.log(`Selected prize bucket: ${bucket}`);
-      createConfetti(100);
-    } else {
-      console.error(`Invalid Guide ID: ${guideId}`);
-      alert('Invalid Guide ID');
-    }
   };
 
   const handleSpinStop = () => {
@@ -301,7 +306,7 @@ function SpinningWheel() {
   
   return (
     <motion.div 
-      className="app-container  bg-gradient-to-r from-[#1a237e] via-[#4a148c] to-[#880e4f] py-12 px-4 sm:px-6 lg:px-8"
+      className="app-container bg-gradient-to-r from-[#1a237e] via-[#4a148c] to-[#880e4f] py-12 px-4 sm:px-6 lg:px-8"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
@@ -311,27 +316,11 @@ function SpinningWheel() {
       
       <motion.div 
         className="wheel-section"
-        
         initial={{ y: 20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.5, delay: 0.2 }}
       >
         <Scene3D />
-        {/* <Canvas>
-        <PerspectiveCamera makeDefault position={[0, 0, 10]} />
-        <ambientLight intensity={0.5} />
-        <pointLight position={[10, 10, 10]} intensity={1} />
-        <pointLight position={[-10, -10, -10]} intensity={0.5} />
-        
-        
-        <Decorations3D />
-        
-        <OrbitControls
-          enableZoom={false}
-          enablePan={false}
-          enableRotate={false}
-        />
-      </Canvas> */}
         <div className="trophy-icon">🏆</div>
         <motion.div 
           className="logo-container"
@@ -346,7 +335,7 @@ function SpinningWheel() {
           >
             <img 
               className="img-sizing" 
-              src="data:image/jpeg;base64,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" 
+              src="data:image/jpeg;base64,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" 
               alt="Left Logo" 
             />
           </motion.div>
@@ -426,40 +415,9 @@ function SpinningWheel() {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
         >
-          {currentGuide ? 'SPIN' : 'Game On Wheel'}
+          {showWheel ? 'SPIN' : 'Game On!'}
         </motion.button>
       </motion.div>
-
-      <Dialog 
-        open={showDialog}
-        onClose={() => setShowDialog(false)}
-        PaperProps={{
-          className: 'custom-dialog'
-        }}
-      >
-        <motion.div 
-          initial={{ opacity: 0, scale: 0.9 }} 
-          animate={{ opacity: 1, scale: 1 }} 
-          transition={{ duration: 0.4, ease: "easeOut" }}
-        >
-          <div className="dialog-title">Enter Your Guide ID</div>
-          <input
-            type="text"
-            className="custom-input"
-            value={guideId}
-            onChange={(e) => setGuideId(e.target.value)}
-            placeholder="Enter ID"
-          />
-          <motion.button 
-            className="dialog-button"
-            onClick={handleGuideIdSubmit}
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-          >
-            Go
-          </motion.button>
-        </motion.div>
-      </Dialog>
 
       <AnimatePresence>
         <Dialog 
@@ -508,4 +466,3 @@ function SpinningWheel() {
 }
 
 export default SpinningWheel;
-

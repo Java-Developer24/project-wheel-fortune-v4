@@ -71,8 +71,79 @@ export default function Dashboard() {
     { name: 'Rank', value: userGuide ? `#${userGuide.Rank}` : '', icon: '🥇' },
   ];
 
+  const getPerformanceStatus = (metric, value) => {
+    const numValue = parseFloat(value);
+    
+    switch(metric) {
+      case 'Refund%':
+        return numValue < 5 ? 'Excellent' : 'Needs Improvement';
+      case 'NRPC':
+        return numValue > 25 ? 'Excellent' : 'Needs Improvement';
+      case 'New Revenue %':
+        return numValue > 100 ? 'Excellent' : 'Needs Improvement';
+      case 'New con%':
+        return numValue > 12 ? 'Excellent' : 'Needs Improvement';
+      case 'NPS':
+        return numValue > 65 ? 'Excellent' : 'Needs Improvement';
+      case 'CPD':
+        return numValue > 20 ? 'Excellent' : 'Needs Improvement';
+      case 'WOW Learning':
+        return numValue > 0.7 ? 'Excellent' : 'Needs Improvement';
+      default:
+        return 'N/A';
+    }
+  };
+
+  const getPerformanceColor = (status) => {
+    return status === 'Excellent' ? 'text-green-600' : 'text-red-600';
+  };
+
+  const getPerformanceWidth = (metric, value) => {
+    const numValue = parseFloat(value);
+    
+    switch(metric) {
+      case 'Refund%':
+        return `${Math.min(100 - (numValue * 20), 100)}%`; // Lower is better
+      case 'NRPC':
+        return `${Math.min((numValue / 25) * 100, 100)}%`;
+      case 'New Revenue %':
+        return `${Math.min((numValue / 100) * 100, 100)}%`;
+      case 'New con%':
+        return `${Math.min((numValue / 12) * 100, 100)}%`;
+      case 'NPS':
+        return `${Math.min((numValue / 65) * 100, 100)}%`;
+      case 'CPD':
+        return `${Math.min((numValue / 20) * 100, 100)}%`;
+      case 'WOW Learning':
+        return `${Math.min(numValue * 100, 100)}%`;
+      default:
+        return '0%';
+    }
+  };
+
+  const getTargetText = (metric) => {
+    switch(metric) {
+      case 'Refund%':
+        return 'Target: <5%';
+      case 'NRPC':
+        return 'Target: $25';
+      case 'New Revenue %':
+        return 'Target: 100%';
+      case 'New con%':
+        return 'Target: 12%';
+      case 'NPS':
+        return 'Target: 65';
+      case 'CPD':
+        return 'Target: 20';
+      case 'WOW Learning':
+        return 'Target: 0.7';
+      default:
+        return '';
+    }
+  };
+
   const performanceMetrics = userGuide ? [
-    { name: 'Refund %', value: userGuide['Refund%'], color: 'from-blue-400 to-blue-600' },
+    { name: 'Refund%', value: userGuide['Refund%'], color: 'from-blue-400 to-blue-600' },
     { name: 'NRPC', value: userGuide['NRPC'], color: 'from-purple-400 to-purple-600' },
     { name: 'New Revenue %', value: userGuide['New Revenue %'], color: 'from-green-400 to-green-600' },
     { name: 'New con%', value: userGuide['New con%'], color: 'from-yellow-400 to-yellow-600' },
@@ -316,31 +387,26 @@ export default function Dashboard() {
                     >
                       <div className="flex justify-between items-center mb-2">
                         <h4 className="text-lg font-semibold text-gray-800">{metric.name}</h4>
-                        <span className="text-lg font-bold text-indigo-600">{metric.value}</span>
+                        <div className="flex items-center">
+                          <span className="text-lg font-bold text-indigo-600 mr-2">{metric.value}</span>
+                          <span className="text-xs text-gray-500">{getTargetText(metric.name)}</span>
+                        </div>
                       </div>
                       <div className="w-full bg-gray-200 rounded-full h-4 overflow-hidden">
                         <motion.div 
                           className={`h-4 rounded-full bg-gradient-to-r ${metric.color}`}
                           initial={{ width: 0 }}
-                          animate={{ width: `${Math.min(parseFloat(metric.value) * 10, 100)}%` }}
+                          animate={{ width: getPerformanceWidth(metric.name, metric.value) }}
                           transition={{ duration: 1, delay: index * 0.1 }}
                         ></motion.div>
                       </div>
                       <div className="mt-2 text-sm text-gray-500 flex justify-between">
                         <span>
-                          {parseFloat(metric.value) > 0.7 ? 'Excellent' : 
-                           parseFloat(metric.value) > 0.5 ? 'Good' : 
-                           parseFloat(metric.value) > 0.3 ? 'Average' : 'Needs Improvement'}
+                          Status:
                         </span>
-                        <motion.span 
-                          className="text-indigo-600 font-medium"
-                          animate={{ scale: [1, 1.1, 1] }}
-                          transition={{ duration: 2, repeat: Infinity }}
-                        >
-                          {parseFloat(metric.value) > 0.7 ? '⭐⭐⭐' : 
-                           parseFloat(metric.value) > 0.5 ? '⭐⭐' : 
-                           parseFloat(metric.value) > 0.3 ? '⭐' : ''}
-                        </motion.span>
+                        <span className={getPerformanceColor(getPerformanceStatus(metric.name, metric.value))}>
+                          {getPerformanceStatus(metric.name, metric.value)}
+                        </span>
                       </div>
                     </motion.div>
                   ))}

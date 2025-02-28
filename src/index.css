@@ -2,7 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+
+
 :root {
+
   --primary-bg: #2E1A47;
   --secondary-bg: #3B2157;
   --accent-yellow: #FFD700;
